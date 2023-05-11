@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:test_code_review/test_button.dart';
 
 void main() {
   runApp(const MyApp());
@@ -95,13 +97,15 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            // const Text(
+            //   'You have pushed the button this many times:',
+            // ),
+            // Text(
+            //   '$_counter',
+            //   style: Theme.of(context).textTheme.headline4,
+            // ),
+            // getListWidget(),
+            getTestButtonWidget(),
           ],
         ),
       ),
@@ -110,6 +114,66 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  Widget getListWidget() {
+    List<String> items = ['apple', 'banana', 'orange', 'grape', 'melon'];
+    return ListView.builder(
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text(items[index]),
+        );
+      },
+    );
+  }
+
+  Widget getTestButtonWidget() {
+    return Container(
+      height: 44,
+      width: MediaQuery.of(context).size.width,
+      color: Colors.yellow,
+      margin: EdgeInsets.only(left: 20),
+      child: IgnorePointer(
+        ignoring: true,
+        child: TextButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(const Color(0xFF979797)),
+            shape: MaterialStateProperty.all(const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(4),
+              ),
+            )),
+          ),
+          onPressed: () {
+            handleClick();
+          },
+          child: FutureBuilder(
+            future: judgeStatus(),
+            builder: (context, snapshot) => Text(snapshot.data == true ? "release按钮" : "debug按钮",
+              style: const TextStyle(
+                fontSize: 16,
+                color: Color(0xFF191A24),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<bool> judgeStatus() {
+    return Future.value(kReleaseMode);
+  }
+
+  // 点击事件
+  void handleClick() {
+    debugPrint('点击测试');
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => RadioButtonDemo()),
     );
   }
 }
