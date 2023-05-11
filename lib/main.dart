@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -102,7 +103,8 @@ class _MyHomePageState extends State<MyHomePage> {
             //   '$_counter',
             //   style: Theme.of(context).textTheme.headline4,
             // ),
-            getListWidget(),
+            // getListWidget(),
+            getTestButtonWidget(),
           ],
         ),
       ),
@@ -124,5 +126,49 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       },
     );
+  }
+
+  Widget getTestButtonWidget() {
+    return Container(
+      height: 44,
+      width: MediaQuery.of(context).size.width,
+      color: Colors.yellow,
+      margin: EdgeInsets.only(left: 20),
+      child: IgnorePointer(
+        ignoring: true,
+        child: TextButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(const Color(0xFF979797)),
+            shape: MaterialStateProperty.all(const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(4),
+              ),
+            )),
+          ),
+          onPressed: () {
+            handleClick();
+          },
+          child: FutureBuilder(
+            future: judgeStatus(),
+            builder: (context, snapshot) => Text(snapshot.data == true ? "release按钮" : "debug按钮",
+              style: const TextStyle(
+                fontSize: 16,
+                color: Color(0xFF191A24),
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<bool> judgeStatus() {
+    return Future.value(kReleaseMode);
+  }
+
+  // 点击事件
+  void handleClick() {
+    debugPrint('点击测试');
   }
 }
