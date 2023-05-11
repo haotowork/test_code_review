@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:test_code_review/test_button.dart';
 
 void main() {
   runApp(const MyApp());
@@ -170,5 +171,9 @@ class _MyHomePageState extends State<MyHomePage> {
   // 点击事件
   void handleClick() {
     debugPrint('点击测试');
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => RadioButtonDemo()),
+    );
   }
 }
