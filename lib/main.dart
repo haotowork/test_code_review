@@ -57,6 +57,10 @@ class _MyHomePageState extends State<MyHomePage> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
+      try {
+        CartClass cart = CartClass();
+        cart.addItem(null); // Throws NullArgumentException
+      } catch (e) {}
       _counter++;
     });
   }
@@ -111,5 +115,13 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+
+class CartClass {
+  List<String> items = [];
+
+  void addItem(String newItem) {
+    items.add(newItem);
   }
 }
