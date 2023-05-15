@@ -113,3 +113,11 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+class CartClass {
+  List<String> items = [];
+
+  void addItem(String newItem) {
+    items.add(newItem);
+  }
+}
